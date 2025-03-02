@@ -1,18 +1,166 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
-@import url('./reset.css');
-@import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
+* {
+  box-sizing: border-box;
+}
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+body,
+button,
+dd,
+div,
+dl,
+dt,
+figure,
+li,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  all: unset;
+}
+
+body {
+  padding-block: 48px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+form {
+  justify-content: center;
+  align-items: center;
+}
+button {
+  background-color: #6d6e88;
+  border-radius: 5px;
+  height: 50px;
+  width: 150px;
+  text-align: center;
+  color: white;
+}
+.container {
+  display: flex;
+  /* Enables CSS flexbox */
+  justify-content: center;
+  /* Centers horizontally */
+  align-items: center;
+  /* Centers vertically */
+  /* Full height to demonstrate vertical centering */
+}
+
+.btn {
+  padding: 10px 20px;
+}
+search {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+}
+
+form input {
+  font-family: inherit;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #2e2f42;
+}
+
+form input {
+  display: block;
+  border-radius: 4px;
+  border: 1px solid #808080;
+  width: 272px;
+  padding: 7px 15px;
+  letter-spacing: 0.04em;
+  transition: border-color 200ms linear;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-inline: auto;
+  width: 1440px;
+  padding: 24px 156px;
+}
+
+.gallery-item {
+  width: calc((100% - 24px * 2) / 3);
+  height: 200px;
+}
+
+.thumb-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: 1px solid #808080;
+}
+
+.thumb-image {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 250ms linear;
+}
+
+.thumb-data {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding-block: 4px;
+  background-color: #fff;
+}
+
+.thumb-data-list {
+  display: flex;
+  justify-content: space-around;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+}
+
+.thumb-data-title {
+  display: block;
+  line-height: 1.33;
+  font-weight: 600;
+  text-align: center;
+}
+
+.thumb-data-data {
+  display: block;
+  line-height: 2;
+  text-align: center;
+}
+
+.loader-box {
+  margin-block: 48px;
+  text-align: center;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: #ff3d00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.hidden {
+  display: none;
+}
