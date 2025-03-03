@@ -1,4 +1,4 @@
-import { currentPage, fetchImages, IMAGES_PER_PAGE } from './js/pickabay-api';
+import { currentPage, fetchImages, IMAGES_PER_PAGE } from './js/pixabay-api';
 import {
   hideButtonLoadMore,
   hideLoadingView,
