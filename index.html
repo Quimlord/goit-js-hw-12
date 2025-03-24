@@ -2,28 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/goit-js-hw-12/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+    <title>HomeWork 12</title>
     <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-KnZd4sWe.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-Db2TdIkw.js">
     <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-CWKLx11g.css">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-BUQR5rjd.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-BleUVzzn.css">
   </head>
   <body>
-    <form>
-      <input
-        type="text"
-        name="search-text"
-        id="search-text"
-        placeholder="Search images..."
-      />
-      <button type="submit">Search</button>
-    </form>
-    <p class="loader-box hidden"><span class="loader"></span></p>
-    <ul class="gallery"></ul>
-    <div class="container">
-      <button class="btn hidden" id="load-more" type="button">Load more</button>
-    </div>
+    <main class="container">
+      <form class="form" id="search-form">
+        <div class="form-center">
+          <label class="form-label">
+            <input
+              class="form-input"
+              type="text"
+              name="search-text"
+              placeholder="Search images..."
+              required
+            />
+          </label>
+          <button class="form-button" type="submit">Search</button>
+        </div>
+        <ul class="gallery"></ul>
+        <button class="add-posts-button" type="submit">Load more</button>
+        <div class="loader"></div>
+      </form>
+
+      <!-- <div class="card-container">
+        <div class="card">
+          <img
+            class="card-image"
+            src="https://pixabay.com/api/?key=49359478-baf2a77463771851b04b26e30&q=yellow+flowers&image_type=photo&pretty=true"
+            alt=""
+          />
+        </div>
+        <div class="card-body">
+          <div class="card-item">
+            <h4>Likes</h4>
+            <p></p>
+          </div>
+          <div class="card-item">
+            <h4>Views</h4>
+            <p></p>
+          </div>
+          <div class="card-item">
+            <h4>Comments</h4>
+            <p></p>
+          </div>
+          <div class="card-item">
+            <h4>Downloads</h4>
+            <p></p>
+          </div>
+        </div>
+      </div> -->
+    </main>
   </body>
 </html>

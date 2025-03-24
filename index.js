@@ -1,35 +1,24 @@
-import{a as y,S as b,i as c}from"./assets/vendor-KnZd4sWe.js";(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))r(t);new MutationObserver(t=>{for(const a of t)if(a.type==="childList")for(const i of a.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function o(t){const a={};return t.integrity&&(a.integrity=t.integrity),t.referrerPolicy&&(a.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?a.credentials="include":t.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function r(t){if(t.ep)return;t.ep=!0;const a=o(t);fetch(t.href,a)}})();const l=40;let n=1;function L(e,s=!1){s?++n:n=1;const o={params:{key:"49142387-370a201ec94f73d63c9116370",q:e,image_type:"photo",orientation:"horizontal",safesearch:!0,iMAGES_per_page:l,page:n}};return y.get("https://pixabay.com/api/",o)}const d=document.querySelector(".gallery"),u=document.querySelector(".loader-box"),h=document.getElementById("load-more"),v=new b(".gallery a",{captionsData:"alt",captionDelay:250});function w(e,s=!1){s||(d.innerHTML="");const o=e.map(({webformatURL:r,largeImageURL:t,tags:a,likes:i,views:f,comments:g,downloads:p})=>`
-          <li class="gallery-item">
-            <a class="gallery-link" href="${t}">
-              <figure class="thumb-container">
-                <img
-                  class="thumb-image"
-                  src="${r}"
-                  data-source="${t}"
-                  alt="${a}"
-                />
-                <figcaption class="thumb-data">
-                  <dl class="thumb-data-list">
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Likes</dt>
-                      <dd class="thumb-data-data">${i}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Views</dt>
-                      <dd class="thumb-data-data">${f}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Comments</dt>
-                      <dd class="thumb-data-data">${g}</dd>
-                    </div>
-                    <div class="thumb-data-item">
-                      <dt class="thumb-data-title">Downloads</dt>
-                      <dd class="thumb-data-data">${p}</dd>
-                    </div>
-                  </dl>
-                </figcaption>
-              </figure>
-            </a>
-          </li>
-        `).join("");d.insertAdjacentHTML("beforeend",o),v.refresh(),s&&e.length&&S()}function S(){const e=document.querySelector(".gallery-item");if(!e)return;const s=e.getBoundingClientRect().height;window.scrollBy({top:s*2,behavior:"smooth"})}function M(e=!1){e||d.classList.add("hidden"),u.classList.remove("hidden")}function E(){d.classList.remove("hidden"),u.classList.add("hidden")}function $(){c.error({position:"topRight",title:"Error",message:"Sorry, there are no images matching your search query. Please try again!",backgroundColor:"#EF4040"})}function q(){c.info({position:"topRight",title:"Info",message:"We're sorry, but you've reached the end of search results."})}function P(){h.classList.remove("hidden")}function B(){h.classList.add("hidden")}const I=document.querySelector("form"),O=document.querySelector("#search-text"),R=document.getElementById("load-more");I.addEventListener("submit",e=>{e.preventDefault(),m()});R.addEventListener("click",()=>m(!0));async function m(e=!1){B();const s=O.value;if(s){M(e);try{const o=await L(s,e);A(o.data,e)}catch(o){console.log(o)}}}function A({hits:e,totalHits:s},o){const r=Math.ceil(s/l),t=n===r,a=!!e.length;a||$(),t&&q(),a&&!t&&P(),E(),w(e,o)}
+import{a as y,S as p,i as n}from"./assets/vendor-Db2TdIkw.js";(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))t(e);new MutationObserver(e=>{for(const s of e)if(s.type==="childList")for(const d of s.addedNodes)d.tagName==="LINK"&&d.rel==="modulepreload"&&t(d)}).observe(document,{childList:!0,subtree:!0});function r(e){const s={};return e.integrity&&(s.integrity=e.integrity),e.referrerPolicy&&(s.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?s.credentials="include":e.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function t(e){if(e.ep)return;e.ep=!0;const s=r(e);fetch(e.href,s)}})();const h="49142387-370a201ec94f73d63c9116370",b="https://pixabay.com/api/",f=15;async function m(i,o=1){try{return(await y.get(b,{params:{key:h,q:i,image_type:"photo",orientation:"horizontal",safesearch:"true",page:o,per_page:f}})).data}catch(r){console.error("Error fetching data:",r)}}let u=null;function g(i=[]){const o=document.querySelector(".gallery"),r=i.map(t=>`
+      <div class="card-container">
+        <div class="card">
+          <a href="${t.largeImageURL}">
+            <img class="card-image" src="${t.webformatURL}" alt="${t.tags}" />
+          </a>
+          <div class="card-body">
+            <div class="card-item">
+              <h4>Likes</h4><p>${t.likes}</p>
+            </div>
+            <div class="card-item">
+              <h4>Views</h4><p>${t.views}</p>
+            </div>
+            <div class="card-item">
+              <h4>Comments</h4><p>${t.comments}</p>
+            </div>
+            <div class="card-item">
+              <h4>Downloads</h4><p>${t.downloads}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join("");o.insertAdjacentHTML("beforeend",r),u?u.refresh():u=new p(".gallery a")}let c=1,l="";const a={form:document.querySelector(".form"),searchQueryInput:document.querySelector(".form-input"),imagesContainer:document.querySelector(".gallery"),button:document.querySelector(".form-button"),loader:document.querySelector(".loader"),buttomLoadMore:document.querySelector(".add-posts-button")};a.form.addEventListener("submit",async i=>{i.preventDefault(),l=a.searchQueryInput.value.trim(),c=1;const o=document.querySelector(".gallery");if(o.innerHTML="",!l){n.error({messageColor:"#FAFAFB",iconUrl:"./img/bi_x-octagon.svg",iconColor:"white",message:"Please enter a search word!",position:"topRight",backgroundColor:"#ef4040",color:"#fafafb"});return}a.loader.style.display="inline-block";try{const r=await m(l),t=Math.ceil(r.totalHits/f);if(r.hits.length===0){n.error({messageColor:"#FAFAFB",iconUrl:"./img/bi_x-octagon.svg",iconColor:"white",message:"Sorry, there are no images matching</br> your search query. Please, try again!",position:"topRight",backgroundColor:"#ef4040",color:"#fafafb"}),a.buttomLoadMore.style.display="none";return}t>c?a.buttomLoadMore.style.display="flex":(a.buttomLoadMore.style.display="none",n.error({messageColor:"#FAFAFB",iconUrl:"./img/bi_x-octagon.svg",iconColor:"white",message:"We are sorry, but you have reached the end of search results.",position:"topRight",backgroundColor:"#4e75ff",color:"#fafafb"})),g(r.hits),console.log(r)}catch{n.error({messageColor:"#FAFAFB",iconUrl:"./img/bi_x-octagon.svg",iconColor:"white",message:"Sorry, there are no images matching</br> your search query. Please, try again!",position:"topRight",backgroundColor:"#ef4040",color:"#fafafb"})}finally{a.loader.style.display="none"}});a.buttomLoadMore.addEventListener("click",async i=>{i.preventDefault(),l=a.searchQueryInput.value.trim(),c++;try{const o=await m(l,c),r=document.querySelector(".card-container").getBoundingClientRect().height;window.scrollBy({top:r*2,behavior:"smooth"}),g(o.hits),console.log(o),a.buttomLoadMore.style.display="flex",Math.ceil(o.totalHits/f)>c?a.buttomLoadMore.style.display="flex":a.buttomLoadMore.style.display="none"}catch{n.error({messageColor:"#FAFAFB",iconUrl:"./img/bi_x-octagon.svg",iconColor:"white",message:"Sorry, there are no images matching</br> your search query. Please, try again!",position:"topRight",backgroundColor:"#ef4040",color:"#fafafb"})}});
 //# sourceMappingURL=index.js.map
