@@ -3,60 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./img/vite-logo.png" type="image/x-icon" />
-    <title>HomeWork 12</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Homework 12</title>
   </head>
   <body>
-    <main class="container">
-      <form class="form" id="search-form">
-        <div class="form-center">
-          <label class="form-label">
-            <input
-              class="form-input"
-              type="text"
-              name="search-text"
-              placeholder="Search images..."
-              required
-            />
-          </label>
-          <button class="form-button" type="submit">Search</button>
-        </div>
-        <ul class="gallery"></ul>
-        <button class="add-posts-button" type="submit">Load more</button>
-        <div class="loader"></div>
-      </form>
+    <form class="search-form">
+      <input
+        name="search"
+        class="input-field"
+        type="search"
+        placeholder="Search images..."
+        required
+      /><button class="search-btn" type="submit">Search</button>
+    </form>
+    <div class="gallery"></div>
+    <button class="load-btn visually-hidden" type="button">Load more</button>
+    <span id="loading"></span>
 
-      <!-- <div class="card-container">
-        <div class="card">
-          <img
-            class="card-image"
-            src="https://pixabay.com/api/?key=49359478-baf2a77463771851b04b26e30&q=yellow+flowers&image_type=photo&pretty=true"
-            alt=""
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-item">
-            <h4>Likes</h4>
-            <p></p>
-          </div>
-          <div class="card-item">
-            <h4>Views</h4>
-            <p></p>
-          </div>
-          <div class="card-item">
-            <h4>Comments</h4>
-            <p></p>
-          </div>
-          <div class="card-item">
-            <h4>Downloads</h4>
-            <p></p>
-          </div>
-        </div>
-      </div> -->
-    </main>
-    <script type="module" src="./js/pixabay-api.js"></script>
-    <script type="module" src="./js/render-functions.js"></script>
-    <script type="module" src="./main.js"></script>
+    <script src="./main.js" type="module"></script>
   </body>
 </html>
