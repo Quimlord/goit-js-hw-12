@@ -100,6 +100,9 @@ pixabayRefs.buttomLoadMore.addEventListener('click', async event => {
   try {
     const response = await fetchPixabay(searchQuery, currentPage);
 
+    populateGallery(response.hits);
+    console.log(response);
+
     const card = document
       .querySelector('.card-container')
       .getBoundingClientRect().height;
@@ -109,15 +112,22 @@ pixabayRefs.buttomLoadMore.addEventListener('click', async event => {
       behavior: 'smooth',
     });
 
-    populateGallery(response.hits);
-    console.log(response);
-
     pixabayRefs.buttomLoadMore.style.display = 'flex';
 
     if (Math.ceil(response.totalHits / PAGE_SIZE) > currentPage) {
       pixabayRefs.buttomLoadMore.style.display = 'flex';
     } else {
       pixabayRefs.buttomLoadMore.style.display = 'none';
+      iziToast.error({
+        messageColor: '#FAFAFB',
+        iconUrl: './img/bi_x-octagon.svg',
+        iconColor: 'white',
+        message:
+          'We are sorry, but you have reached the end of search results.',
+        position: 'topRight',
+        backgroundColor: '#4e75ff',
+        color: '#fafafb',
+      });
     }
   } catch (error) {
     iziToast.error({

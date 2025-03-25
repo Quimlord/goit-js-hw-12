@@ -66,10 +66,10 @@
   padding: 0px 8px;
 }
 .form-input:hover {
-  border: 1px solid #000;
+  border: 2px solid #000;
 }
 .form-button:active {
-  border: 1px solid #4e75ff;
+  border: 2px solid #4e75ff;
 }
 .form-button {
   border-radius: 8px;
