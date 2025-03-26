@@ -99,3 +99,8 @@
 .load-more:focus {
   background-color: #6c8cff;
 }
+.loader-hid {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
