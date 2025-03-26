@@ -1,140 +1,128 @@
-import { getImages } from './js/pixabay-api';
-import { templateImages } from './js/render-functions';
+// Описаний у документації
 import iziToast from 'izitoast';
+// Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
+//============================
+
+// Описаний у документації
 import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const searchform = document.querySelector('.search-form');
-const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
-const loaderMore = document.querySelector('.loader-more');
-const loadButton = document.querySelector('.load-button-style');
-const lightbox = new SimpleLightbox('.gallery a', {
-  captions: true,
+import { Spinner } from 'spin.js';
+
+//?============================================
+
+import { getPhotos } from './js/pixabay-api';
+import { createMarkup } from './js/render-functions';
+
+const form = document.querySelector('.form-js');
+const gallary = document.querySelector('.gallary');
+const target = document.querySelector('.js-backdrop');
+const loadBtn = document.querySelector('.js-load-more');
+loadBtn.addEventListener('click', handleLoadClick);
+form.addEventListener('submit', handleSubmit);
+
+const spinnerOpts = {
+  lines: 9, // The number of lines to draw
+  length: 42, // The length of each line
+  width: 24, // The line thickness
+  radius: 45, // The radius of the inner circle
+  scale: 0.9, // Scales overall size of the spinner
+  corners: 1, // Corner roundness (0..1)
+  speed: 0.8, // Rounds per second
+  rotate: 0, // The rotation offset
+  animation: 'spinner-line-fade-quick', // The CSS animation name for the lines
+  direction: 1, // 1: clockwise, -1: counterclockwise
+  color: '#ffffff', // CSS color or array of colors
+  fadeColor: 'transparent', // CSS color or array of colors
+  top: '50%', // Top position relative to parent
+  left: '50%', // Left position relative to parent
+  shadow: '0 0 1px transparent', // Box-shadow for the lines
+  zIndex: 2000000000, // The z-index (defaults to 2e9)
+  className: 'spinner', // The CSS class to assign to the spinner
+  position: 'absolute', // Element positioning
+};
+
+const spinner = new Spinner(spinnerOpts);
+const lightbox = new SimpleLightbox('.gallary a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
 
-const params = {
-  query: '',
-  page: 1,
-  perPage: 40,
-  total: 0,
-};
+let page = 1;
+let searchQuery = '';
 
-hideLoadMoreBtn();
-hideLoaderMore();
-
-searchform.addEventListener('submit', async e => {
+async function handleSubmit(e) {
   e.preventDefault();
-  params.page = 1;
-  params.query = searchform.elements.searchQuery.value.trim();
-
-  if (params.query === '') {
-    iziToast.warning({
-      message: 'Please, fill the form!',
+  spinnerRun();
+  page = 1;
+  gallary.innerHTML = '';
+  searchQuery = e.target.elements.input.value.trim();
+  if (searchQuery.length === 0) {
+    spinnerStop();
+    return iziToast.error({
+      message: 'Sorry, your query is empty Please try again!',
       position: 'topRight',
     });
-    return;
   }
-
-  gallery.innerHTML = '';
-  hideLoadMoreBtn();
-  hideLoaderMore();
-  loader.classList.add('visible');
-
+  const res = await getPhotos(searchQuery, page);
   try {
-    const data = await getImages(params.query, params.page, params.perPage);
-    params.total = data.totalHits;
-
-    if (data.hits.length === 0) {
-      iziToast.info({
-        message: 'No images found. Try another query.',
+    if (res.hits.length === 0) {
+      loadBtn.classList.add('is-hidden');
+      gallary.innerHTML = '';
+      return iziToast.error({
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
       });
-      return;
     }
-
-    gallery.insertAdjacentHTML('beforeend', templateImages(data.hits));
+    gallary.insertAdjacentHTML('beforeend', createMarkup(res.hits));
     lightbox.refresh();
-    checkButtonStatus();
+    if (res.totalHits > 9) {
+      loadBtn.classList.remove('is-hidden');
+    }
   } catch (error) {
-    iziToast.error({
-      title: 'Error',
-      message: 'Something went wrong, try again later!',
-    });
-    console.error(error);
+    console.log(error);
   } finally {
-    loader.classList.remove('visible');
+    spinnerStop();
   }
+}
 
-  e.target.reset();
-});
-
-loadButton.addEventListener('click', async e => {
-  e.preventDefault();
-  params.page += 1;
-
-  hideLoadMoreBtn();
-  showLoaderMore();
-
+async function handleLoadClick() {
+  spinnerRun();
+  page += 1;
+  const res = await getPhotos(searchQuery, page);
   try {
-    const data = await getImages(params.query, params.page, params.perPage);
+    const lastPage = Math.ceil(res.totalHits / 9);
+    if (lastPage === page) {
+      loadBtn.classList.add('is-hidden');
+      iziToast.info({
+        message: "We're sorry, but you've reached the end of search results.",
+        position: 'topRight',
+      });
+    }
+    gallary.insertAdjacentHTML('beforeend', createMarkup(res.hits));
 
-    gallery.insertAdjacentHTML('beforeend', templateImages(data.hits));
+    const imgHeight = gallary.firstElementChild.getBoundingClientRect().height;
+    window.scrollBy({
+      top: imgHeight * 2,
+      behavior: 'smooth',
+    });
     lightbox.refresh();
-    smoothScroll();
-    checkButtonStatus();
   } catch (error) {
-    iziToast.error({
-      title: 'Error',
-      message: 'Something went wrong, try again later!',
-    });
-    console.error(error);
+    console.log(error);
   } finally {
-    hideLoaderMore();
-  }
-});
-
-function showLoadMoreBtn() {
-  loadButton.style.display = 'block';
-}
-
-function hideLoadMoreBtn() {
-  loadButton.style.display = 'none';
-}
-
-function showLoaderMore() {
-  loaderMore.classList.remove('visually-hidden'); // Видаляємо прихований клас
-  loaderMore.classList.add('visible'); // Робимо його видимим
-}
-
-function hideLoaderMore() {
-  loaderMore.classList.add('visually-hidden'); // Додаємо прихований клас
-  loaderMore.classList.remove('visible'); // Прибираємо display: block
-}
-
-function checkButtonStatus() {
-  const maxPage = Math.ceil(params.total / params.perPage);
-
-  if (params.page < maxPage) {
-    showLoadMoreBtn();
-  } else {
-    hideLoadMoreBtn();
-    iziToast.info({
-      message: "We're sorry, but you've reached the end of search results.",
-      position: 'topLeft',
-    });
+    spinnerStop();
   }
 }
 
-function smoothScroll() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
+function spinnerRun() {
+  spinner.spin(target);
+  target.classList.remove('is-hidden');
+}
+
+function spinnerStop() {
+  spinner.stop(target);
+  target.classList.add('is-hidden');
 }

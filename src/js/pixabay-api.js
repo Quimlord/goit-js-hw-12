@@ -1,49 +1,30 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '49142387-370a201ec94f73d63c9116370';
+const BASE_URL = 'https://pixabay.com';
+const END_POINT = '/api';
 
-export async function getImages(value) {
-  let params = {
+export async function getPhotos(q, page) {
+  const params = {
+    q,
     key: API_KEY,
-    q: value,
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    per_page: 9,
+    page,
   };
-  //   return await axios
-  //     .get(BASE_URL, { params })
-  //     .then(res => {
-  //       if (res.data.hits.length === 0) {
-  //         iziToast.error({
-  //           message:
-  //             'Sorry, there are no images matching your search query. Please try again!',
-  //           position: 'topRight',
-  //           pauseOnHover: true,
-  //           balloon: true,
-  //         });
-  //       }
-  //       return res.data.hits;
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //       throw error;
-  //     });
+  const options = new URLSearchParams(params);
+  const url = `${BASE_URL}${END_POINT}/?${options}`;
 
+  const res = await axios.get(url);
   try {
-    const res = await axios.get(BASE_URL, { params });
-    if (res.data.hits.length === 0) {
-      iziToast.error({
-        message:
-          'Sorry, there are no images matching your search query. Please try again!',
-        position: 'topRight',
-        pauseOnHover: true,
-        balloon: true,
-      });
-    }
     return res.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch {
+    iziToast.error({
+      title: 'Error',
+      message: 'Ups.. Something wrong',
+      position: 'topRight',
+    });
   }
 }
