@@ -17,7 +17,7 @@ import { getPhotos } from './js/pixabay-api';
 import { createMarkup } from './js/render-functions';
 
 const form = document.querySelector('.form-js');
-const gallary = document.querySelector('.gallary');
+const gallery = document.querySelector('.gallery');
 const target = document.querySelector('.js-backdrop');
 const loadBtn = document.querySelector('.js-load-more');
 loadBtn.addEventListener('click', handleLoadClick);
@@ -45,7 +45,7 @@ const spinnerOpts = {
 };
 
 const spinner = new Spinner(spinnerOpts);
-const lightbox = new SimpleLightbox('.gallary a', {
+const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
@@ -57,7 +57,7 @@ async function handleSubmit(e) {
   e.preventDefault();
   spinnerRun();
   page = 1;
-  gallary.innerHTML = '';
+  gallery.innerHTML = '';
   searchQuery = e.target.elements.input.value.trim();
   if (searchQuery.length === 0) {
     spinnerStop();
@@ -70,14 +70,14 @@ async function handleSubmit(e) {
   try {
     if (res.hits.length === 0) {
       loadBtn.classList.add('is-hidden');
-      gallary.innerHTML = '';
+      gallery.innerHTML = '';
       return iziToast.error({
         message:
           'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
       });
     }
-    gallary.insertAdjacentHTML('beforeend', createMarkup(res.hits));
+    gallery.insertAdjacentHTML('beforeend', createMarkup(res.hits));
     lightbox.refresh();
     if (res.totalHits > 9) {
       loadBtn.classList.remove('is-hidden');
@@ -102,9 +102,9 @@ async function handleLoadClick() {
         position: 'topRight',
       });
     }
-    gallary.insertAdjacentHTML('beforeend', createMarkup(res.hits));
+    gallery.insertAdjacentHTML('beforeend', createMarkup(res.hits));
 
-    const imgHeight = gallary.firstElementChild.getBoundingClientRect().height;
+    const imgHeight = gallery.firstElementChild.getBoundingClientRect().height;
     window.scrollBy({
       top: imgHeight * 2,
       behavior: 'smooth',
