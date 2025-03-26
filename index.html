@@ -4,34 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/goit-js-hw-12/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery App</title>
+    <title>Vanilla App Template</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
       rel="stylesheet"
     />
     <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-BBSqv8W6.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-DtmXjUio.js">
     <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DumFYO8Z.css">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-yRgS3SBf.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-_0lBxMTo.css">
   </head>
-  <body class="container">
-    <main>
-      <form class="form search-form" name="form">
-        <input
-          class="form-input"
-          name="searchQuery"
-          placeholder="Search images..."
-        />
-        <button class="submit-button">Search</button>
-      </form>
-      <div class="loader"></div>
-    </main>
-    <ul class="gallery"></ul>
-    <div class="load-more">
-      <button class="submit-button load-button-style">Load more</button>
-      <span class="loader-more"></span>
-    </div>
+  <body>
+    <section class="form-sec">
+      <div class="container">
+        <form class="form form-js">
+          <input
+            class="form-input"
+            type="text"
+            name="input"
+            placeholder="Search images..."
+          />
+          <button class="submit-btn" type="submit">Search</button>
+        </form>
+        <ul class="gallary"></ul>
+      </div>
+      <button type="button" class="load-more js-load-more is-hidden">
+        Load more
+      </button>
+      <div class="backdrop js-backdrop is-hidden"></div>
+    </section>
+
+    <!-- //* scripts -->
   </body>
 </html>
