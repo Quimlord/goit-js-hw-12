@@ -1,30 +1,81 @@
 import axios from 'axios';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+import { markup } from './render-functions';
+import { removeLoadStroke } from './render-functions';
+import errorIcon from '../img/icon.svg';
 
-const API_KEY = '49142387-370a201ec94f73d63c9116370';
-const BASE_URL = 'https://pixabay.com';
-const END_POINT = '/api';
+const box = document.querySelector('.gallery');
+const load = document.querySelector('.loader');
+const addMoreButton = document.querySelector('.to-add');
+const iziOption = {
+  messageColor: '#FAFAFB',
+  messageSize: '16px',
+  backgroundColor: '#EF4040',
+  iconUrl: errorIcon,
+  transitionIn: 'bounceInLeft',
+  position: 'topRight',
+  displayMode: 'replace',
+  closeOnClick: true,
+};
+let page = 1;
+let perPage = 15;
 
-export async function getPhotos(q, page) {
-  const params = {
-    q,
+export function resetPage() {
+  page = 1;
+}
+export function addPage() {
+  page += 1;
+}
+
+export async function getImage(input) {
+  const API_KEY = '49142387-370a201ec94f73d63c9116370';
+  const query = encodeURIComponent(input);
+  const urlParams = new URLSearchParams({
     key: API_KEY,
+    q: query,
     image_type: 'photo',
     orientation: 'horizontal',
-    safesearch: true,
-    per_page: 9,
-    page,
-  };
-  const options = new URLSearchParams(params);
-  const url = `${BASE_URL}${END_POINT}/?${options}`;
+    safesearch: 'true',
+    page: page,
+    per_page: perPage,
+  });
+  const URL = `https://pixabay.com/api/?${urlParams}`;
 
-  const res = await axios.get(url);
   try {
-    return res.data;
-  } catch {
-    iziToast.error({
-      title: 'Error',
-      message: 'Ups.. Something wrong',
-      position: 'topRight',
+    const { data } = await axios.get(URL);
+
+    markup(data);
+    if (data.totalHits < page * perPage) {
+      endOfList(load);
+      return;
+    }
+    if (page >= 2) {
+      const list = document.querySelector('.gallery__item');
+      const rect = list.getBoundingClientRect();
+      window.scrollBy({
+        top: rect.height * 2,
+        behavior: 'smooth',
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    box.innerHTML = '';
+    load.innerHTML = '';
+
+    iziToast.show({
+      ...iziOption,
+      message: 'Sorry, an error occurred. Please try again!',
     });
+    return;
   }
+}
+
+function endOfList(daddyElement) {
+  removeLoadStroke(daddyElement);
+  daddyElement.insertAdjacentHTML(
+    'beforeend',
+    '<p class="loading-text">We are sorry, but you have reached the end of search results.</p>'
+  );
+  addMoreButton.classList.add('hide');
 }
