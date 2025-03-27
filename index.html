@@ -1,42 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/goit-js-hw-12/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
-      rel="stylesheet"
-    />
-    <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-DtmXjUio.js">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DumFYO8Z.css">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-B2wQebGp.css">
-  </head>
-  <body>
-    <section class="form-sec">
-      <div class="container">
-        <form class="form form-js">
-          <input
-            class="form-input"
-            type="text"
-            name="input"
-            placeholder="Search images..."
-          />
-          <button class="submit-btn" type="submit">Search</button>
-        </form>
-        <ul class="gallery"></ul>
-      </div>
-      <div class="loader-hid"><span class="loader"></span></div>
-      <button type="button" class="load-more js-load-more is-hidden">
-        Load more
-      </button>
-      <div class="backdrop js-backdrop is-hidden"></div>
-    </section>
 
-    <!-- //* scripts -->
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image search</title>
+  <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet" />
+
+
+  <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
+  <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-BjRz3xa9.js">
+  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DumFYO8Z.css">
+  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-IE5Ynu6q.css">
+</head>
+
+
+<body>
+  <main>
+    <form class="form">
+      <input type="text" class="user-input" placeholder="Search images..." />
+      <button type="submit" class="submit-button">Search</button>
+    </form>
+    <ul class="gallery"></ul>
+    <div class="loader"></div>
+    <button class=" submit-button to-add hide">Load more</button>
+
+</body>
+
 </html>
