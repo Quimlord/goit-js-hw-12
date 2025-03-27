@@ -1,34 +1,6 @@
 import axios from 'axios';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-import { markup } from './render-functions';
-import { removeLoadStroke } from './render-functions';
-import errorIcon from '../img/icon.svg';
 
-const box = document.querySelector('.gallery');
-const load = document.querySelector('.loader');
-const addMoreButton = document.querySelector('.to-add');
-const iziOption = {
-  messageColor: '#FAFAFB',
-  messageSize: '16px',
-  backgroundColor: '#EF4040',
-  iconUrl: errorIcon,
-  transitionIn: 'bounceInLeft',
-  position: 'topRight',
-  displayMode: 'replace',
-  closeOnClick: true,
-};
-let page = 1;
-let perPage = 15;
-
-export function resetPage() {
-  page = 1;
-}
-export function addPage() {
-  page += 1;
-}
-
-export async function getImage(input) {
+export async function getImages(input, page) {
   const API_KEY = '49142387-370a201ec94f73d63c9116370';
   const query = encodeURIComponent(input);
   const urlParams = new URLSearchParams({
@@ -37,45 +9,13 @@ export async function getImage(input) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: 'true',
-    page: page,
-    per_page: perPage,
+    page,
+    per_page: 15,
   });
+
   const URL = `https://pixabay.com/api/?${urlParams}`;
 
-  try {
-    const { data } = await axios.get(URL);
+  const { data } = await axios.get(URL);
 
-    markup(data);
-    if (data.totalHits < page * perPage) {
-      endOfList(load);
-      return;
-    }
-    if (page >= 2) {
-      const list = document.querySelector('.gallery__item');
-      const rect = list.getBoundingClientRect();
-      window.scrollBy({
-        top: rect.height * 2,
-        behavior: 'smooth',
-      });
-    }
-  } catch (error) {
-    console.error(error);
-    box.innerHTML = '';
-    load.innerHTML = '';
-
-    iziToast.show({
-      ...iziOption,
-      message: 'Sorry, an error occurred. Please try again!',
-    });
-    return;
-  }
-}
-
-function endOfList(daddyElement) {
-  removeLoadStroke(daddyElement);
-  daddyElement.insertAdjacentHTML(
-    'beforeend',
-    '<p class="loading-text">We are sorry, but you have reached the end of search results.</p>'
-  );
-  addMoreButton.classList.add('hide');
+  return data;
 }

@@ -5,8 +5,9 @@ import { resetPage } from './js/pixabay-api';
 import { addPage } from './js/pixabay-api';
 import { addLoadStroke } from './js/render-functions';
 import errorIcon from './img/icon.svg';
+import { list } from 'postcss';
 
-const box = document.querySelector('.gallery');
+const galleryList = document.querySelector('.gallery');
 const load = document.querySelector('.loader');
 const addMoreButton = document.querySelector('.to-add');
 const form = document.querySelector('.form');
@@ -32,7 +33,7 @@ form.addEventListener('submit', event => {
     });
     return;
   }
-  box.innerHTML = '';
+  galleryList.innerHTML = '';
   resetPage();
   addLoadStroke(load);
   getImage(inputValue);
